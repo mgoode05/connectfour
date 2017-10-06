@@ -1,0 +1,21 @@
+body {
+    background-color: white;
+
+}
+table {
+    font-size: 50px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-family: 'Indie Flower', cursive;
+}
+
+td {
+    height: 80px;
+    width: 80px;
+    padding-top: 10px;
+    border: 1px solid #989898;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    
+}
