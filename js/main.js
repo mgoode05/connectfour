@@ -20,17 +20,22 @@ function init() {
          [0,0,0,0,0,0]
     ];
     winner = null;
+    
 }
 init();
-// render();
 
-// function render (board) {
-//     for (var i = 0; i < 42; i++) {
-//         board[i].style.backgroundcolor = color;
-//     };
-//         // $('table').css('background-color', color);
+Array.prototype.flatten = function() {
+    return this.reduce(function(a, b) {
+        return a.concat(b);
+      }, []);
+}
 
-// }
+function render () {
+    board.flatten().forEach(function(elem, index) {
+        $(`#${index}`).css('background-color', color[elem.toString()]); 
+    })
+}
+render();
 
 $('button').on('click', function() {
     var rowIdx;
@@ -39,248 +44,195 @@ $('button').on('click', function() {
     var rowIdx = board[colIdx].indexOf(0);
     if (rowIdx === -1) return;
     board[colIdx][rowIdx] = turn;
+    console.log('clicked on' ,colIdx, rowIdx)
     turn *= -1;
-    // update winner
-    // winner = getWinner();
-
-
-
-
+    render();
+    winCheck();
 });
 
-// document.querySelector('button').addEventListener('click', add0);
-// function add0(evt){
-//     player = !player;
-//     var colIdx = parseInt(this.id);
-//     var rowIdx = board.indexOf(0);
-//     if (board[7] !== 0 ) return;
-//     else if (player) board.splice(rowIdx, 1, 1);
-//     else board.splice(rowIdx, 1, -1);
-//     console.log(board);  
+
+function winCheck () {
+    // colIdx = a;
+    // discIdx = b;
+
+    for( var colIdx = 0; colIdx < 7; colIdx++) {
+        for (var rowIdx = 0; rowIdx < 7; rowIdx++){
+            // at each cell
+            // note: colIdx is equal to the col index at this cell
+            // rowIdx is the row index of this cell
+            console.log('colIdx =', colIdx, 'rowIdx = ', rowIdx)
+            console.log(board[colIdx][rowIdx]);
+            
+            // check right
+            checkRight(colIdx, rowIdx);
+
+            // // check up
+            // checkUp(colIDx, rowIdx);
+            // // check diagonal up right
+            // checkDiagnolUpRight(coldIdx, rowIdx);
+            // // check diagonal up left
+            // checkDiagnolUpLeft(colIdx, rowIdx);
+        }
+    }
+
+    // check the columns
     
-// }
-// document.querySelector("#B1").addEventListener('click', add1);
-// function add1(evt){
-//     player = !player;
-//     var colIdx = parseInt(this.id);
-//     var place = board.indexOf(0);
-//     if (board[7] !== 0 ) return;
-//     else if (player) board.splice(place, 1, 1);
-//     else board.splice(place, 1, -1);
-//     console.log(board);   
-// }
-
-
-
-
-
-
-
-
-
-// document.querySelector("#B1").addEventListener('click', add1);
-// function add1(evt){
-//     // evt.target.button
-//     if (col1.length >= 6) col1.push("0");
-//     else if (player1) col1.push("1");
-//     else col1.push("-1");
-//     player1 = !player1;
-//     console.log(col1);
-// } 
-// document.querySelector("#B2").addEventListener('click', add2);
-// function add2(evt){
-//     evt.target.button
-//     if (col2.length >= 6) col2.push("0");
-//     else if (player1) col2.push("1");
-//     else col2.push("-1");
-//     player1 = !player1;
-//     console.log(col2);
-// } 
-// document.querySelector("#B3").addEventListener('click', add3);
-// function add3(evt){
-//     evt.target.button
-//     if (col3.length >= 6) col3.push("0");
-//     else if (player1) col3.push("1");
-//     else col3.push("-1");
-//     player1 = !player1;
-//     console.log(col3);
-// }
-// document.querySelector("#B4").addEventListener('click', add4);
-// function add4(evt){
-//     evt.target.button
-//     if (col4.length >= 6) col4.push("0");
-//     else if (player1) col4.push("1");
-//     else col4.push("-1");
-//     player1 = !player1;
-//     console.log(col4);
-// }
-// document.querySelector("#B5").addEventListener('click', add5);
-// function add5(evt){
-//     evt.target.button
-//     if (col5.length >= 6) col5.push("0");
-//     else if (player1) col5.push("1");
-//     else col5.push("-1");
-//     player1 = !player1;
-//     console.log(col5);
-// }
-// document.querySelector("#B6").addEventListener('click', add6);
-// function add6(evt){
-//     evt.target.button
-//     if (col6.length >= 6) col6.push("0");
-//     else if (player1) col6.push("1");
-//     else col6.push("-1");
-//     player1 = !player1;
-//     console.log(col6);
-// };
-
-
-// $(this).css('background-color', color[1]);
-// $(this).css('background-color', color[board]);
-
-
-// $('.table').on('click', 'td.dots', function(board){
-//     var index = board;
-//     var col = getCol(index);
-//     var row = getRow(index);
-//     function getCol(index) {
-//         return index % 7;
-//     }
-//     function getRow(index) {
-//         var row = Math.floor(index / 7);
-//         return 5 - row;
-//     }
+    // // check the row
+    // Math.abs(board[colIdx][rowIdx] + board[colIdx][rowIdx + 1] + board[colIdx[rowIdx + 2]] + board[colIdx][rowIdx +3]) === 4;
     
-//     $(this).css('background-color', color[board[row][col]]);
-// });
-
-
-
-// document.querySelector("table").addEventListener('click', switchTurn);
-
-// function switchTurn () {
-//     $('.board').on('click', 'td.dots', function(index) {
-//         index = this.id;
-//         console.log(index)
-//     });
-// }
-
-
-
-
-
-//         var col = function getCol(index) {
-    //             return index % 7;
-//         }
-//         var row = function getRow(index) {
-//             (Math.floor(index/7))-5;
-//             return;
-//         }
-//         blue = !blue;
-//         $(this).css('background-color', color[0]);
-//         // $(this).css('background-color', color[board[col][row]]);
-
-//         var index = board.splice(this.id, "55");
-//         console.log(board[index]);
-//     })
-  
-
-
-
-// function switchTurn(evt) {
-//     evt.target.id
-//     var index = board.splice(evt.target.id, 5, 5)
-//     if (board[index] === "1" || board[index] === "-1") {
-//         return
-//     }
-//     blue = !blue;
-//     board[index] = blue ? "1" : "-1";
-//     render(board);
-// }
-// document.querySelector(".board").addEventListener('click', switchTurn);
-
-// function render (board) {
-//     board.forEach(function(elem, index) {
-//         document.querySelector(`#board${index}`).innerText = elem;
-//     });
-   
+    // // check diagonal up
+    // Math.abs(board[colIdx][rowIdx] + board[colIdx + 1 ][rowIdx +1] + board[colIdx + 2][rowIdx + 2] + board[colIdx + 3][rowIdx + 3]) === 4;
     
-// };
-            
-        // });
-      
-//         $('.board').on('click', "td.dots", function(index){
-//             var index = this.id;
-            
-//             function getCol(index) {
-//                 ;
-//             }
-//         })
-        
-//  function render () {
-//     var color = {
-//           "0": "white",
-//           "1": "red",
-//           "-1": "blue" 
-//             }
-//         }
-            
-//   $('.button').on('click', 'button.drop', function(board){
-//             var index = this.id;
-//             var col = getCol(index);
-//             var row = getRow(index);
-            
-//       $(this).css('background-color', color[0]);
-//        $(this).css('background-color', color[board[row][col]]);
-//     });
+    // // check diagonal down
+    // Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx - 1] + board[colIdx - 2][rowIdx + 2] + board[colIdx - 3][discIdx + 3]) === 4;
+};
 
-//         function getCol(index) {
-//             return index % 7;
-//         }
-//         function getRow(index) {
-//             var row = Math.floor(index / 7);
-//             return 5 - row;
-//         }
-
-
-// document.querySelector("table").addEventListener('click', turn);
-//         function turn (evt) {
-//             turn *= -1;
-            
-//         } 
+function checkRight(colIdx, rowIdx) {
+    if (colIdx > 3) return; //console.log("cant check right at", colIdx, rowIdx);
     
-//     }
-// }
+    var cell1 = board[colIdx][rowIdx];
+    var cell2 = board[colIdx +1][rowIdx];
+    var cell3 = board[colIdx +2][rowIdx];
+    var cell4 = board[colIdx +3][rowIdx];
 
-// function winCheck () {
-//    Math.abs(board[colIdx][discIdx] + board[colIdx + 1][discIdx] + board[colIdx + 2] + board[colIdx + 3][discIdx]) === 4;
-//   //up-down check
-//    Math.abs(board[colIdx][discIdx] + board[colIdx][discIdx + 1] + board[colIdx[discIdx + 2]] + board[colIdx][discIdx +3]) === 4;
-//    //horizontal check
-//    Math.abs(board[colIdx][discIdx] + board[colIdx + 1 ][discIdx +1] + board[colIdx + 2][discIdx + 2] + board[colIdx + 3][discIdx + 3]) === 4;
-//     //diagnol-up check
-//    Math.abs(board[colIdx][discIdx] + board[colIdx + 1][discIdx - 1] + board[colIdx - 2][discIdx + 2] + board[colIdx - 3][discIdx + 3]) 
-// };
+    var sum =  Math.abs(cell1 + cell2 + cell3 + cell4);
 
-// function endGame () {
+    console.log(cell1, cell2, cell3, cell4);
+    console.log('Sum is =', sum);
 
+    if (sum === 4) console.log("winner");
 
-// }
-
-// render();
-// init();
-
-// $('.button').on('click', 'button.drop', function(index){
-//     var index = this.id;
-// $(this).css('background-color', color[0]);
-// $(this).css('background-color', color[board[1][1]);
-// });
-
-
-// var board = [[0,0,0,0,0,0],
-// [col1],
-// [col2],
-// [col3],
-// [col4],
-// [col5],
-// [col6]
-// 
+    // if (Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx] + board[colIdx + 2] + board[colIdx + 3][rowIdx]) === 4 || -4) console.log("winner");
+}
+    
+    
+    
+    // document.querySelector("table").addEventListener('click', switchTurn);
+    
+    // function switchTurn () {
+        //     $('.board').on('click', 'td.dots', function(index) {
+            //         index = this.id;
+            //         console.log(index)
+            //     });
+            // }
+            
+            // function winCheck () {
+            //     Math.abs(board[colIdx][discIdx] + board[colIdx + 1][discIdx] + board[colIdx + 2] + board[colIdx + 3][discIdx]) === 4;
+               
+            //     Math.abs(board[colIdx][discIdx] + board[colIdx][discIdx + 1] + board[colIdx[discIdx + 2]] + board[colIdx][discIdx +3]) === 4;
+             
+            //     Math.abs(board[colIdx][discIdx] + board[colIdx + 1 ][discIdx +1] + board[colIdx + 2][discIdx + 2] + board[colIdx + 3][discIdx + 3]) === 4;
+                 
+            //     Math.abs(board[colIdx][discIdx] + board[colIdx + 1][discIdx - 1] + board[colIdx - 2][discIdx + 2] + board[colIdx - 3][discIdx + 3]) === 4;
+            //  };  
+            
+            
+            
+            //         var col = function getCol(index) {
+                //             return index % 7;
+                //         }
+                //         var row = function getRow(index) {
+                    //             (Math.floor(index/7))-5;
+                    //             return;
+                    //         }
+                    //         blue = !blue;
+                    //         $(this).css('background-color', color[0]);
+                    //         // $(this).css('background-color', color[board[col][row]]);
+                    
+                    //         var index = board.splice(this.id, "55");
+                    //         console.log(board[index]);
+                    //     })
+                    
+                    
+                    
+                    
+                    // function switchTurn(evt) {
+                        //     evt.target.id
+                        //     var index = board.splice(evt.target.id, 5, 5)
+                        //     if (board[index] === "1" || board[index] === "-1") {
+                            //         return
+                            //     }
+                            //     blue = !blue;
+                            //     board[index] = blue ? "1" : "-1";
+                            //     render(board);
+                            // }
+                            // document.querySelector(".board").addEventListener('click', switchTurn);
+                            
+                            // function render (board) {
+                                //     board.forEach(function(elem, index) {
+                                    //         document.querySelector(`#board${index}`).innerText = elem;
+                                    //     });
+                                    
+                                    
+                                    // };
+                                    
+                                    // });
+                                    
+                                    //         $('.board').on('click', "td.dots", function(index){
+                                        //             var index = this.id;
+                                        
+                                        //             function getCol(index) {
+                                            //                 ;
+                                            //             }
+                                            //         })
+                                            
+                                            //  function render () {
+                                                //     var color = {
+                                                    //           "0": "white",
+                                                    //           "1": "red",
+                                                    //           "-1": "blue" 
+                                                    //             }
+                                                    //         }
+                                                    
+                                                    //   $('.button').on('click', 'button.drop', function(board){
+                                                        //             var index = this.id;
+                                                        //             var col = getCol(index);
+                                                        //             var row = getRow(index);
+                                                        
+                                                        //       $(this).css('background-color', color[0]);
+                                                        //        $(this).css('background-color', color[board[row][col]]);
+                                                        //     });
+                                                        
+                                                        //         function getCol(index) {
+                                                            //             return index % 7;
+                                                            //         }
+                                                            //         function getRow(index) {
+                                                                //             var row = Math.floor(index / 7);
+                                                                //             return 5 - row;
+                                                                //         }
+                                                                
+                                                                
+                                                                // document.querySelector("table").addEventListener('click', turn);
+                                                                //         function turn (evt) {
+                                                                    //             turn *= -1;
+                                                                    
+                                                                    //         } 
+                                                                    
+                                                                    //     }
+                                                                    // }
+                                                                    
+                                                                    
+                                                                    // function endGame () {
+                                                                        
+                                                                        
+                                                                        // }
+                                                                        
+                                                                        // render();
+                                                                        // init();
+                                                                        
+                                                                        // $('.button').on('click', 'button.drop', function(index){
+                                                                            //     var index = this.id;
+                                                                            // $(this).css('background-color', color[0]);
+                                                                            // $(this).css('background-color', color[board[1][1]);
+                                                                            // });
+                                                              
+                                                                            // document.querySelector('button').addEventListener('click', add0);
+                                                                            // function add0(evt){
+                                                                                //     player = !player;
+                                                                                //     var colIdx = parseInt(this.id);
+                                                                                //     var rowIdx = board.indexOf(0);
+                                                                                //     if (board[7] !== 0 ) return;
+                                                                                //     else if (player) board.splice(rowIdx, 1, 1);
+                                                                                //     else board.splice(rowIdx, 1, -1);
+                                                                                //     console.log(board);  
+                                                                                
