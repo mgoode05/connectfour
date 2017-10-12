@@ -10,7 +10,7 @@ var turn;
 
 function init() {
     turn = 1;
-    board = [
+     board = [
         [0,0,0,0,0,0],
          [0,0,0,0,0,0],
          [0,0,0,0,0,0],
@@ -19,6 +19,15 @@ function init() {
          [0,0,0,0,0,0],
          [0,0,0,0,0,0]
     ];
+    // board = [
+    //     [0,0,0,0,0,0],
+    //      [0,0,0,0,0,0],
+    //      [0,0,0,0,0,0],
+    //      [0,0,0,0,0,0],
+    //      [0,0,0,0,0,0],
+    //      [0,0,0,0,0,0],
+    //      [0,0,0,0,0,0]
+    // ];
     winner = null;
     
 }
@@ -38,84 +47,96 @@ function render () {
 render();
 
 $('button').on('click', function() {
+    if (winner) return;
     var rowIdx;
     var colIdx = parseInt(this.id);
     var colArr = board[colIdx];
     var rowIdx = board[colIdx].indexOf(0);
     if (rowIdx === -1) return;
     board[colIdx][rowIdx] = turn;
-    console.log('clicked on' ,colIdx, rowIdx)
     turn *= -1;
-    render();
     winCheck();
+    render();
 });
 
-
 function winCheck () {
-    // colIdx = a;
-    // discIdx = b;
-
-    for( var colIdx = 0; colIdx < 7; colIdx++) {
-        for (var rowIdx = 0; rowIdx < 7; rowIdx++){
-            // at each cell
-            // note: colIdx is equal to the col index at this cell
-            // rowIdx is the row index of this cell
-            console.log('colIdx =', colIdx, 'rowIdx = ', rowIdx)
-            console.log(board[colIdx][rowIdx]);
-            
-            // check right
-            checkRight(colIdx, rowIdx);
-
-            // // check up
-            // checkUp(colIDx, rowIdx);
-            // // check diagonal up right
-            // checkDiagnolUpRight(coldIdx, rowIdx);
-            // // check diagonal up left
-            // checkDiagnolUpLeft(colIdx, rowIdx);
+    if (winner) return;
+    
+    for( var colIdx = 0; colIdx < 6; colIdx++) {
+        for (var rowIdx = 0; rowIdx < 5; rowIdx++) {
+            winner = checkRight(colIdx, rowIdx) || checkUp(colIdx, rowIdx) || checkDiagnolUp(colIdx, rowIdx) || checkDiagnolDown(colIdx, rowIdx);
+            if (winner) return; 
         }
+        if (winner) return;
     }
 
-    // check the columns
-    
-    // // check the row
-    // Math.abs(board[colIdx][rowIdx] + board[colIdx][rowIdx + 1] + board[colIdx[rowIdx + 2]] + board[colIdx][rowIdx +3]) === 4;
-    
-    // // check diagonal up
-    // Math.abs(board[colIdx][rowIdx] + board[colIdx + 1 ][rowIdx +1] + board[colIdx + 2][rowIdx + 2] + board[colIdx + 3][rowIdx + 3]) === 4;
-    
-    // // check diagonal down
-    // Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx - 1] + board[colIdx - 2][rowIdx + 2] + board[colIdx - 3][discIdx + 3]) === 4;
+    var flatBoard = board.flatten()
+    if (!flatBoard.includes(0) && winner == null) {
+        console.log('You TIE!')
+        return 
+    }
+
 };
 
 function checkRight(colIdx, rowIdx) {
-    if (colIdx > 3) return; //console.log("cant check right at", colIdx, rowIdx);
-    
+    // return 1 or -1 if player wins, or 'T' if tie game, else return null
+    if (colIdx > 3) return; //console.log("cant check right at", colIdx, rowIdx); 
     var cell1 = board[colIdx][rowIdx];
     var cell2 = board[colIdx +1][rowIdx];
     var cell3 = board[colIdx +2][rowIdx];
     var cell4 = board[colIdx +3][rowIdx];
+    var sum =  Math.abs(cell1 + cell2 + cell3 + cell4);
+    if (sum === 4) winner = board[colIdx][rowIdx];
+    return winner
+}
+
+function checkUp(colIdx, rowIdx) {
+    if (rowIdx > 3) return; 
+    var cell1 = board[colIdx][rowIdx];
+    var cell2 = board[colIdx][rowIdx + 1];
+    var cell3 = board[colIdx][rowIdx + 2];
+    var cell4 = board[colIdx][rowIdx + 3];
+    var sum =  Math.abs(cell1 + cell2 + cell3 + cell4);
+    if (sum === 4) winner = board[colIdx][rowIdx];
+    return winner
+}
+
+function checkDiagnolUp(colIdx, rowIdx){
+    if (colIdx > 3) return; 
+    var cell1 = board[colIdx][rowIdx];
+    var cell2 = board[colIdx + 1][rowIdx + 1];
+    var cell3 = board[colIdx + 2][rowIdx + 2];
+    var cell4 = board[colIdx + 3][rowIdx + 3];
 
     var sum =  Math.abs(cell1 + cell2 + cell3 + cell4);
-
-    console.log(cell1, cell2, cell3, cell4);
-    console.log('Sum is =', sum);
-
-    if (sum === 4) console.log("winner");
-
-    // if (Math.abs(board[colIdx][rowIdx] + board[colIdx + 1][rowIdx] + board[colIdx + 2] + board[colIdx + 3][rowIdx]) === 4 || -4) console.log("winner");
+    if (sum === 4) winner = board[colIdx][rowIdx];
+    return winner
 }
+
+function checkDiagnolDown(colIdx, rowIdx){
+    if (colIdx > 3) return; 
+    var cell1 = board[colIdx][rowIdx];
+    var cell2 = board[colIdx + 1][rowIdx - 1];
+    var cell3 = board[colIdx + 2][rowIdx - 2];
+    var cell4 = board[colIdx + 3][rowIdx - 3];
+
+    var sum =  Math.abs(cell1 + cell2 + cell3 + cell4);
+    if (sum === 4) winner = board[colIdx][rowIdx];
+    return winner
+}
+
+
     
-    
-    
-    // document.querySelector("table").addEventListener('click', switchTurn);
-    
-    // function switchTurn () {
-        //     $('.board').on('click', 'td.dots', function(index) {
-            //         index = this.id;
-            //         console.log(index)
-            //     });
-            // }
-            
+
+
+
+
+
+
+
+
+
+
             // function winCheck () {
             //     Math.abs(board[colIdx][discIdx] + board[colIdx + 1][discIdx] + board[colIdx + 2] + board[colIdx + 3][discIdx]) === 4;
                
@@ -127,42 +148,13 @@ function checkRight(colIdx, rowIdx) {
             //  };  
             
             
-            
-            //         var col = function getCol(index) {
-                //             return index % 7;
-                //         }
-                //         var row = function getRow(index) {
-                    //             (Math.floor(index/7))-5;
-                    //             return;
-                    //         }
-                    //         blue = !blue;
-                    //         $(this).css('background-color', color[0]);
-                    //         // $(this).css('background-color', color[board[col][row]]);
-                    
-                    //         var index = board.splice(this.id, "55");
-                    //         console.log(board[index]);
+      
                     //     })
                     
                     
                     
                     
-                    // function switchTurn(evt) {
-                        //     evt.target.id
-                        //     var index = board.splice(evt.target.id, 5, 5)
-                        //     if (board[index] === "1" || board[index] === "-1") {
-                            //         return
-                            //     }
-                            //     blue = !blue;
-                            //     board[index] = blue ? "1" : "-1";
-                            //     render(board);
-                            // }
-                            // document.querySelector(".board").addEventListener('click', switchTurn);
-                            
-                            // function render (board) {
-                                //     board.forEach(function(elem, index) {
-                                    //         document.querySelector(`#board${index}`).innerText = elem;
-                                    //     });
-                                    
+                  
                                     
                                     // };
                                     
