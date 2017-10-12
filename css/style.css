@@ -1,13 +1,21 @@
-body {
-    background-color: white;
-
+h1 {
+    font-family: 'Nosifer', cursive;
+    color: whitesmoke;
+    margin: 0 auto;
 }
 
+body {
+    background-color: rgb(41, 76, 189);
+
+}
+div{
+    
+}
 .dropButton {
     margin: 0 auto;
-    font-size: 20px;
-    font-family: 'Indie Flower', cursive;
-    padding: 0 0 0 200px;
+    font-size: 15px;
+    padding: 0 20px 0 300px;
+
 }
 
 table {
@@ -24,10 +32,10 @@ td {
     width: 85px;
     padding-top: 1px;
     
-    
     vertical-align: middle;
     text-align: center;
     cursor: pointer;
     border-radius: 50px;
 
 }
+

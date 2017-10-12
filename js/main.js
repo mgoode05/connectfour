@@ -125,7 +125,7 @@ function checkDiagnolDown(colIdx, rowIdx){
     return winner
 }
 
-
+// document.querySelector("reset").addEventListener('click', init);
     
 
 
