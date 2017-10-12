@@ -13,15 +13,17 @@ body {
 table {
     font-size: 50px;
     margin: 0 auto;
+    border-radius: 5px;
     border-collapse: collapse;
     font-family: 'Indie Flower', cursive;
     border: 2px black;
 }
 
 td {
-    height: 80px;
-    width: 80px;
-    padding-top: 10px;
+    height: 85px;
+    width: 85px;
+    padding-top: 1px;
+    
     
     vertical-align: middle;
     text-align: center;
