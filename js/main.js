@@ -1,12 +1,14 @@
 var color = {
     "0": "white",
-    "1": "red",
-    "-1": "blue" 
+    "1": "yellow",
+    "-1": "black" 
 }
 
 var board;
 var winner;
 var turn;
+
+var $msg = $('.gameMessage');
 
 function init() {
     turn = 1;
@@ -19,19 +21,10 @@ function init() {
          [0,0,0,0,0,0],
          [0,0,0,0,0,0]
     ];
-    // board = [
-    //     [0,0,0,0,0,0],
-    //      [0,0,0,0,0,0],
-    //      [0,0,0,0,0,0],
-    //      [0,0,0,0,0,0],
-    //      [0,0,0,0,0,0],
-    //      [0,0,0,0,0,0],
-    //      [0,0,0,0,0,0]
-    // ];
-    winner = null;
     
+    winner = null;
+    // $(".gameMessage").html('')
 }
-init();
 
 Array.prototype.flatten = function() {
     return this.reduce(function(a, b) {
@@ -43,10 +36,10 @@ function render () {
     board.flatten().forEach(function(elem, index) {
         $(`#${index}`).css('background-color', color[elem.toString()]); 
     })
+    message(winner);
 }
-render();
 
-$('button').on('click', function() {
+$('.dropButton button').on('click', function() {
     if (winner) return;
     var rowIdx;
     var colIdx = parseInt(this.id);
@@ -69,13 +62,11 @@ function winCheck () {
         }
         if (winner) return;
     }
-
     var flatBoard = board.flatten()
     if (!flatBoard.includes(0) && winner == null) {
         console.log('You TIE!')
         return 
     }
-
 };
 
 function checkRight(colIdx, rowIdx) {
@@ -125,7 +116,25 @@ function checkDiagnolDown(colIdx, rowIdx){
     return winner
 }
 
-// document.querySelector("reset").addEventListener('click', init);
+//Reset Button
+document.querySelector(".reset").addEventListener('click', function() {
+    init();
+    render();
+});
+
+function message(winner) {
+    var flatBoard = board.flatten();
+    if (winner === 1 || winner === -1) {
+        $msg.html(`${turn === 1 ? 'Blue' : 'Red'} WINS!`);
+    } else if (!flatBoard.includes(0) && winner == null) {
+        $msg.html("Tie Game");
+    } else {
+        $msg.html(`It's ${turn === 1 ? 'Blue' : 'Red'}'s Turn`);
+    }
+}
+
+init();
+render();
     
 
 
