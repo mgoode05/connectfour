@@ -21,8 +21,7 @@ function init() {
          [0,0,0,0,0,0],
          [0,0,0,0,0,0]
     ];
-    
-    winner = null;
+      winner = null;
 }
 
 Array.prototype.flatten = function() {
@@ -53,7 +52,6 @@ $('.dropButton button').on('click', function() {
 
 function winCheck () {
     if (winner) return;
-    
     for( var colIdx = 0; colIdx < 6; colIdx++) {
         for (var rowIdx = 0; rowIdx < 5; rowIdx++) {
             winner = checkRight(colIdx, rowIdx) || checkUp(colIdx, rowIdx) || checkDiagnolUp(colIdx, rowIdx) || checkDiagnolDown(colIdx, rowIdx);
@@ -63,14 +61,12 @@ function winCheck () {
     }
     var flatBoard = board.flatten()
     if (!flatBoard.includes(0) && winner == null) {
-        console.log('You TIE!')
         return 
     }
 };
 
 function checkRight(colIdx, rowIdx) {
-    // return 1 or -1 if player wins, or 'T' if tie game, else return null
-    if (colIdx > 3) return; //console.log("cant check right at", colIdx, rowIdx); 
+    if (colIdx > 3) return; 
     var cell1 = board[colIdx][rowIdx];
     var cell2 = board[colIdx +1][rowIdx];
     var cell3 = board[colIdx +2][rowIdx];
@@ -115,7 +111,6 @@ function checkDiagnolDown(colIdx, rowIdx){
     return winner
 }
 
-//Reset Button
 document.querySelector(".reset").addEventListener('click', function() {
     init();
     render();
@@ -134,5 +129,4 @@ function message(winner) {
 }
 
 init();
-render();
-    
+render();   
