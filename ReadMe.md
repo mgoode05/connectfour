@@ -29,7 +29,7 @@
 
     Please visit my [Trello](https://trello.com/b/0cy1CdJW/connect-four) to view the planning process.
 
- #Authors
+ # Authors
 
     Michael S. Goode, Esq.
 
