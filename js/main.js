@@ -1,7 +1,7 @@
 var color = {
     "0": "white",
-    "1": "yellow",
-    "-1": "black" 
+    "1": "blue",
+    "-1": "red" 
 }
 
 var board;
@@ -23,7 +23,6 @@ function init() {
     ];
     
     winner = null;
-    // $(".gameMessage").html('')
 }
 
 Array.prototype.flatten = function() {
@@ -126,6 +125,7 @@ function message(winner) {
     var flatBoard = board.flatten();
     if (winner === 1 || winner === -1) {
         $msg.html(`${turn === 1 ? 'Blue' : 'Red'} WINS!`);
+        // $board.toggleClass('.gameSetMatch');
     } else if (!flatBoard.includes(0) && winner == null) {
         $msg.html("Tie Game");
     } else {
@@ -136,104 +136,3 @@ function message(winner) {
 init();
 render();
     
-
-
-
-
-
-
-
-
-
-
-            // function winCheck () {
-            //     Math.abs(board[colIdx][discIdx] + board[colIdx + 1][discIdx] + board[colIdx + 2] + board[colIdx + 3][discIdx]) === 4;
-               
-            //     Math.abs(board[colIdx][discIdx] + board[colIdx][discIdx + 1] + board[colIdx[discIdx + 2]] + board[colIdx][discIdx +3]) === 4;
-             
-            //     Math.abs(board[colIdx][discIdx] + board[colIdx + 1 ][discIdx +1] + board[colIdx + 2][discIdx + 2] + board[colIdx + 3][discIdx + 3]) === 4;
-                 
-            //     Math.abs(board[colIdx][discIdx] + board[colIdx + 1][discIdx - 1] + board[colIdx - 2][discIdx + 2] + board[colIdx - 3][discIdx + 3]) === 4;
-            //  };  
-            
-            
-      
-                    //     })
-                    
-                    
-                    
-                    
-                  
-                                    
-                                    // };
-                                    
-                                    // });
-                                    
-                                    //         $('.board').on('click', "td.dots", function(index){
-                                        //             var index = this.id;
-                                        
-                                        //             function getCol(index) {
-                                            //                 ;
-                                            //             }
-                                            //         })
-                                            
-                                            //  function render () {
-                                                //     var color = {
-                                                    //           "0": "white",
-                                                    //           "1": "red",
-                                                    //           "-1": "blue" 
-                                                    //             }
-                                                    //         }
-                                                    
-                                                    //   $('.button').on('click', 'button.drop', function(board){
-                                                        //             var index = this.id;
-                                                        //             var col = getCol(index);
-                                                        //             var row = getRow(index);
-                                                        
-                                                        //       $(this).css('background-color', color[0]);
-                                                        //        $(this).css('background-color', color[board[row][col]]);
-                                                        //     });
-                                                        
-                                                        //         function getCol(index) {
-                                                            //             return index % 7;
-                                                            //         }
-                                                            //         function getRow(index) {
-                                                                //             var row = Math.floor(index / 7);
-                                                                //             return 5 - row;
-                                                                //         }
-                                                                
-                                                                
-                                                                // document.querySelector("table").addEventListener('click', turn);
-                                                                //         function turn (evt) {
-                                                                    //             turn *= -1;
-                                                                    
-                                                                    //         } 
-                                                                    
-                                                                    //     }
-                                                                    // }
-                                                                    
-                                                                    
-                                                                    // function endGame () {
-                                                                        
-                                                                        
-                                                                        // }
-                                                                        
-                                                                        // render();
-                                                                        // init();
-                                                                        
-                                                                        // $('.button').on('click', 'button.drop', function(index){
-                                                                            //     var index = this.id;
-                                                                            // $(this).css('background-color', color[0]);
-                                                                            // $(this).css('background-color', color[board[1][1]);
-                                                                            // });
-                                                              
-                                                                            // document.querySelector('button').addEventListener('click', add0);
-                                                                            // function add0(evt){
-                                                                                //     player = !player;
-                                                                                //     var colIdx = parseInt(this.id);
-                                                                                //     var rowIdx = board.indexOf(0);
-                                                                                //     if (board[7] !== 0 ) return;
-                                                                                //     else if (player) board.splice(rowIdx, 1, 1);
-                                                                                //     else board.splice(rowIdx, 1, -1);
-                                                                                //     console.log(board);  
-                                                                                
