@@ -119,8 +119,7 @@ document.querySelector(".reset").addEventListener('click', function() {
 function message(winner) {
     var flatBoard = board.flatten();
     if (winner === 1 || winner === -1) {
-        $msg.html(`${turn === 1 ? 'Blue' : 'Red'} WINS!`);
-        // $board.toggleClass('.gameSetMatch');
+        $msg.html(`${turn === 1 ? 'Red' : 'Blue'} WINS!`);
     } else if (!flatBoard.includes(0) && winner == null) {
         $msg.html("Tie Game");
     } else {
